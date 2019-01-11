@@ -1,97 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="ZH_CN">
+
+
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    异步加载图片 | Blog
+  </title>
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="
+  异步,加载资源
+  ">
+  
+  <meta name="author" content="addliu">
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+  <link rel="stylesheet" href="/addliu.github.io/css/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   
 
   
-  <title>异步加载图片 | Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。它由社区最早提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。 ES6使用Promise对象异步加载图片可以将图片等资源的加载写成一个Promise，一旦加载完成，Promise的状态就会发生变回。 123456789101112const preloadImage =">
-<meta name="keywords" content="异步,加载资源">
-<meta property="og:type" content="article">
-<meta property="og:title" content="异步加载图片">
-<meta property="og:url" content="https://github.com/addliu/addliu.github.io/2019/01/11/ES6使用Promise异步加载图片/index.html">
-<meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。它由社区最早提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。 ES6使用Promise对象异步加载图片可以将图片等资源的加载写成一个Promise，一旦加载完成，Promise的状态就会发生变回。 123456789101112const preloadImage =">
-<meta property="og:locale" content="ZH_CN">
-<meta property="og:updated_time" content="2019-01-11T06:45:51.963Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="异步加载图片">
-<meta name="twitter:description" content="Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。它由社区最早提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。 ES6使用Promise对象异步加载图片可以将图片等资源的加载写成一个Promise，一旦加载完成，Promise的状态就会发生变回。 123456789101112const preloadImage =">
-  
-    <link rel="alternate" href="/addliu.github.io/atom.xml" title="Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/addliu.github.io/css/style.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 </head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/addliu.github.io/" id="logo">Blog</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/addliu.github.io/">Home</a>
-        
-          <a class="main-nav-link" href="/addliu.github.io/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/addliu.github.io/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/addliu/addliu.github.io"></form>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/addliu.github.io/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
       </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/addliu.github.io/archives">Archives</a></li>
+        
+        
+        <li><a href="/addliu.github.io/categories">Categories</a></li>
+        
+        
+        <li><a href="/addliu.github.io/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/addliu.github.io/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="https://avatars3.githubusercontent.com/u/15166030?s=460&amp;v=4"> <i class="fa fa-caret-down"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/addliu.github.io/archives" class="header-toolbar-left"><i class="fa fa-file-text"></i> Posts </a>
+        <a href="/addliu.github.io/archives" class="header-toolbar-right"> 1 </a>
+      </li>
+      <li>
+        <a href="/addliu.github.io/tags" class="header-toolbar-left"><i class="fa fa-tags"></i> Tags </a>
+        <a href="/addliu.github.io/tags" class="header-toolbar-right"> 2 </a>
+      </li>
+      <li>
+        <a href="/addliu.github.io/categories" class="header-toolbar-left"><i class="fa fa-folder-open"></i> Categories </a>
+        <a href="/addliu.github.io/categories" class="header-toolbar-right"> 1 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/addliu.github.io/">Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
     </div>
   </div>
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-ES6使用Promise异步加载图片" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/addliu.github.io/2019/01/11/ES6使用Promise异步加载图片/" class="article-date">
-  <time datetime="2019-01-11T03:49:34.938Z" itemprop="datePublished">2019-01-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/addliu.github.io/categories/ECMAScript6/">ECMAScript6</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      异步加载图片
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。它由社区最早提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了<code>Promise</code>对象。</p>
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    addliu
+
+    <span class="post-date float-right" title="{{moment(1547178574938).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1547178574938).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>异步加载图片</h1>
+    <p>Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。它由社区最早提出和实现，ES6 将其写进了语言标准，统一了用法，原生提供了<code>Promise</code>对象。</p>
 <h2 id="ES6使用Promise对象异步加载图片"><a href="#ES6使用Promise对象异步加载图片" class="headerlink" title="ES6使用Promise对象异步加载图片"></a>ES6使用Promise对象异步加载图片</h2><p>可以将图片等资源的加载写成一个<code>Promise</code>，一旦加载完成，<code>Promise</code>的状态就会发生变回。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> preloadImage = <span class="function"><span class="keyword">function</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">    image.onload  = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      resolve(image);</span><br><span class="line">    &#125;;</span><br><span class="line">    image.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'不能加载URL为['</span>+path+<span class="string">']的图片。'</span>));</span><br><span class="line">    &#125;;</span><br><span class="line">    image.src = path;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>上面代码中，使用<code>Promise</code>包装了一个图片加载的异步操作。如果加载成功，就调用<code>resolve</code>方法，否则就调用<code>reject</code>方法。不需要提供<code>resolve</code>方法，该方法由ES6提供。</p>
@@ -101,112 +137,43 @@
 <p>下面提供一个异步加载图片的完整示例：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> lugia <span class="keyword">from</span> <span class="string">'./static/images/lugia.jpg'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">        <span class="keyword">super</span>(props);</span><br><span class="line">        <span class="keyword">this</span>.image = <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    preloadImage = <span class="function"><span class="keyword">function</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">const</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">            image.onload  = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                resolve(image);</span><br><span class="line">            &#125;;</span><br><span class="line">            image.onerror = reject;</span><br><span class="line">            image.src = path;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 页面加载前预加载图片</span></span><br><span class="line">    componentWillMount() &#123;</span><br><span class="line">        <span class="keyword">this</span>.image = <span class="keyword">this</span>.preloadImage(lugia);</span><br><span class="line">    &#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 页面加载完成后加图片嵌入页面中</span></span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">        <span class="keyword">this</span>.image</span><br><span class="line">            .then(<span class="function">(<span class="params">image</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">document</span>.getElementById(<span class="string">'img_lugia'</span>).appendChild(image);</span><br><span class="line">            &#125;)</span><br><span class="line">            .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Error:'</span>+ e));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">"App"</span>&gt;</span><br><span class="line">        &lt;header className=<span class="string">"App-header"</span>&gt;</span><br><span class="line">            &lt;div id=<span class="string">"img_lugia"</span>/&gt;</span><br><span class="line">          &lt;p&gt;</span><br><span class="line">            Edit &lt;code&gt;src/App.js&lt;<span class="regexp">/code&gt; and save to reload.</span></span><br><span class="line"><span class="regexp">          &lt;/</span>p&gt;</span><br><span class="line">          &lt;a</span><br><span class="line">            className=<span class="string">"App-link"</span></span><br><span class="line">            href=<span class="string">"https://reactjs.org"</span></span><br><span class="line">            target=<span class="string">"_blank"</span></span><br><span class="line">            rel=<span class="string">"noopener noreferrer"</span></span><br><span class="line">          &gt;</span><br><span class="line">            Learn React</span><br><span class="line">          &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>header&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
 
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://github.com/addliu/addliu.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 addliu</li>
+      <li><a href="https://github.com/addliu/addliu.github.io">Home</a></li>
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/addliu/addliu.github.io/2019/01/11/ES6使用Promise异步加载图片/" data-id="cjqrok1n50000iwj84vz5epx0" class="article-share-link">Share</a>
+      <li><a href="https://github.com/addliu">Github</a></li>
       
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/addliu.github.io/tags/加载资源/">加载资源</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/addliu.github.io/tags/异步/">异步</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/addliu.github.io/categories/ECMAScript6/">ECMAScript6</a></li></ul>
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
     </div>
-  </div>
-
-
-  
+    </div>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/addliu.github.io/tags/加载资源/">加载资源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/addliu.github.io/tags/异步/">异步</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/addliu.github.io/tags/加载资源/" style="font-size: 10px;">加载资源</a> <a href="/addliu.github.io/tags/异步/" style="font-size: 10px;">异步</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/addliu.github.io/archives/2019/01/">一月 2019</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/addliu.github.io/2019/01/11/ES6使用Promise异步加载图片/">异步加载图片</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 Liu Chuang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/addliu.github.io/" class="mobile-nav-link">Home</a>
-  
-    <a href="/addliu.github.io/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/addliu.github.io/fancybox/jquery.fancybox.css">
-  <script src="/addliu.github.io/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/addliu.github.io/js/script.js"></script>
+  </footer>
+</div>
 
 
 
-  </div>
+
+<script src="/addliu.github.io/js/main.js"></script>
+
 </body>
 </html>
